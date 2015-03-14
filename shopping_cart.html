@@ -10,9 +10,36 @@
 	</head>
 	<body>
 		<! -- document code goes here -->
-		<h1>Hello, Knockout.js</h1>
-		<p><span data-bind='text: fullName'></span>'s Shopping Cart</p>
-		<p><button data-bind='click: checkout'>Checkout</button></p>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<h1>Hello, Knockout.js</h1>
+				<div class="row-fluid"><span data-bind='text: fullName'></span>'s Shopping Cart</div>
+				<p>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<td>Product</td>
+								<td>Price</td>
+							</tr>
+						</thead>
+						<tbody data-bind='foreach: shoppingCart'>
+							<tr >
+								<td data-bind="text: name"></td>
+								<td data-bind="text: price"></td>
+							</tr>
+						</tbody>
+					</table>
+				</p>
+				<button data-bind='click: checkout' class="btn">Checkout</button>
+			</div>
+		</div>
+		<style>
+			.table thead tr td
+			{
+				font-weight: bold;
+				font-size: 1.2em;
+			}
+		</style>
 		<script type='text/javascript' src='lib/js/knockout-2.2.0.js'/>
 		<script src="lib/js/jquery-1.11.2.min.js" type="text/javascript"></script>
 		<script src="lib/js/bootstrap-3.3.2.min.js" type="text/javascript"></script>
@@ -26,8 +53,14 @@
 			personViewModel1.firstName("Cena");
 		</script>
 		<script type="text/javascript">
+			//contoh binding ke observable arry
+			function Product(name, price){
+				this.name = ko.observable(name),
+				this.price = ko.observable(price)
+			}
+			
 			//contoh binding ke custom object
-			function personViewModel(firstName, lastName){
+			function PersonViewModel(firstName, lastName){
 				this.firstName = ko.observable(firstName),
 				this.lastName = ko.observable(lastName),
 				this.fullName = ko.computed(function(){
@@ -35,9 +68,14 @@
 				},this),
 				this.checkout = function(){
 					alert('Trying to checkout!');
-				}
+				},
+				this.shoppingCart = ko.observableArray([
+					new Product("Momogi", 1000),
+					new Product("Richeese Roll", 1500),
+					new Product("Wafer Superman", 1000)
+				])
 			}
-			var vm = new personViewModel("Hanif", "Robbani");
+			var vm = new PersonViewModel("Hanif", "Robbani");
 			ko.applyBindings(vm);
 			vm.firstName("Hanif Amal");
 		</script>
