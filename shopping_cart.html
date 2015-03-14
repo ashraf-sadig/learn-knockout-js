@@ -11,7 +11,7 @@
 	<body>
 		<! -- document code goes here -->
 		<h1>Hello, Knockout.js</h1>
-		<p><span data-bind='text: firstName'></span>'s Shopping Cart</p>
+		<p><span data-bind='text: fullName'></span>'s Shopping Cart</p>
 		<p><button data-bind='click: checkout'>Checkout</button></p>
 		<script type='text/javascript' src='lib/js/knockout-2.2.0.js'/>
 		<script src="lib/js/jquery-1.11.2.min.js" type="text/javascript"></script>
@@ -30,11 +30,16 @@
 			function personViewModel(firstName, lastName){
 				this.firstName = ko.observable(firstName),
 				this.lastName = ko.observable(lastName),
+				this.fullName = ko.computed(function(){
+					return this.firstName() + " " + this.lastName();
+				},this),
 				this.checkout = function(){
 					alert('Trying to checkout!');
 				}
 			}
-			ko.applyBindings(new personViewModel("Hanif", "Robbani"));
+			var vm = new personViewModel("Hanif", "Robbani");
+			ko.applyBindings(vm);
+			vm.firstName("Hanif Amal");
 		</script>
 	</body>
 </html>
