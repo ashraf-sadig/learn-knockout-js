@@ -31,6 +31,15 @@
 					</table>
 				</p>
 				<button data-bind='click: checkout' class="btn">Checkout</button>
+				<button class="btn" data-bind="click: addProduct">Add Product</button>
+			</div>
+			<div>
+				<h3>Add Product to Cart</h3>
+				<form class="form-inline">
+					<input type="text" class="input-small" placeholder="Name"></input>
+					<input type="number" step="0.01" class="input-small" placeholder="Price"></input>
+					<button class="btn" >Add Product</button>
+				</form>
 			</div>
 		</div>
 		<style>
@@ -73,7 +82,10 @@
 					new Product("Momogi", 1000),
 					new Product("Richeese Roll", 1500),
 					new Product("Wafer Superman", 1000)
-				])
+				]),
+				this.addProduct = function(){
+					this.shoppingCart.push(new Product("More Momogi", 1000));
+				}
 			}
 			var vm = new PersonViewModel("Hanif", "Robbani");
 			ko.applyBindings(vm);
