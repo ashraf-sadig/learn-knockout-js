@@ -26,12 +26,13 @@
 							<tr >
 								<td data-bind="text: name"></td>
 								<td data-bind="text: price"></td>
+								<td><button class="btn" data-bind="click: $root.removeProduct">Remove</button></td>
 							</tr>
 						</tbody>
 					</table>
 				</p>
 				<button data-bind='click: checkout' class="btn">Checkout</button>
-				<button class="btn" data-bind="click: addProduct">Add Product</button>
+				<button class="btn btn-primary" data-bind="click: addProduct">Add Product</button>
 			</div>
 			<div>
 				<h3>Add Product to Cart</h3>
@@ -70,6 +71,8 @@
 			
 			//contoh binding ke custom object
 			function PersonViewModel(firstName, lastName){
+				var self = this;
+			
 				this.firstName = ko.observable(firstName),
 				this.lastName = ko.observable(lastName),
 				this.fullName = ko.computed(function(){
@@ -85,6 +88,11 @@
 				]),
 				this.addProduct = function(){
 					this.shoppingCart.push(new Product("More Momogi", 1000));
+				},
+				this.removeProduct = function(product){
+					self.shoppingCart.destroy(product);
+					//demonstrate that deleted items is not actually deleted
+					//alert(self.shoppingCart().length);
 				}
 			}
 			var vm = new PersonViewModel("Hanif", "Robbani");
