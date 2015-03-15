@@ -35,14 +35,14 @@
 								<td data-bind="text: $index"></td>
 								<td data-bind="text: name"></td>
 								<td data-bind="text: price"></td>
-								<td><button class="btn" data-bind="click: $root.removeProduct">Remove</button></td>
+								<td><button class="btn" data-bind="click: $root.removeProduct, css: {'btn-primary': discount()===undefined || discount()==0}">Remove</button></td>
 								<td><ul data-bind="foreach: tags">
 									<li>
 										<span data-bind="text: $parent.name"></span>-<span data-bind="text: $data"></span>
 									</li>
 								</ul></td>
 								<td data-bind="if: discount()>0" style="color:red">
-									You saved Rp.<span data-bind="text: discountText"></span>!!!
+									You saved <span data-bind="text: discountText, css: {supersaver: discount()>.10}"></span>!!!
 								</td>
 							</tr>
 						</tbody>
@@ -60,6 +60,11 @@
 		</div>
 		<style>
 			.table thead tr td
+			{
+				font-weight: bold;
+				font-size: 1.2em;
+			}
+			.supersaver
 			{
 				font-weight: bold;
 				font-size: 1.2em;
@@ -100,7 +105,7 @@
 				};
 				this.shoppingCart = ko.observableArray([
 					new Product("Momogi", 1000, null, .05),
-					new Product("Richeese Roll", 1500, ["Richeese"], .15),
+					new Product("Richeese Roll", 1500, ["Richeese"], .70),
 					new Product("Wafer Superman", 1000)
 				]);
 				this.addProduct = function(){
